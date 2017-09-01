@@ -55,6 +55,15 @@ clevertap.account.push(
       
       </script>
     
+    <script type="text/javascript">
+    
+    clevertap.notifications.push({
+    "titleText":'Would you like to receive Push Notifications?',
+    "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+    "okButtonText":'Sign me up!',
+    "rejectButtonText":'No thanks',
+    "okButtonColor":'#f28046'});
+       </script>
      <script type="text/javascript">
     clevertap.notificationCallback = function(msg){
       //raise the notification viewed and clicked events in the callback
