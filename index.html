@@ -60,7 +60,37 @@ clevertap.account.push(
       </script> -->
     
     
-            <script>var pathvars={worker:"/service-worker1.js",manifest:"/manifest1.json"};</script>       
+<!--             <script>var pathvars={worker:"/service-worker1.js",manifest:"/manifest1.json"};</script>        -->
+         <script>
+
+
+   
+
+
+
+
+
+     
+      
+          window.addEventListener('load', function() {
+            var hashes = {};
+            var prop,endPoint;
+            ["appCss", "appJs"].map((val,idx) => {
+              if(document.getElementById(val)){
+                prop = val.toLowerCase().indexOf("css") == -1 ? "src" : "href";
+                endPoint = document.getElementById(val)[prop].split("/");
+                hashes[val] = endPoint[endPoint.length-1].split(".")[1] + "-" + endPoint[endPoint.length-1].split(".")[0];
+              }
+            });
+            hashes = JSON.stringify(hashes);
+			var pathvars={worker:"/sw1.js?hash=123",manifest:"/manifest1.json"};
+            
+           
+
+          });
+      
+      </script>
+
         
        <script src="https://clientcdn.pushengage.com/core/2f69b3c31bb992a66ef6f3b215b6cb47.js"></script>
 <script> _pe.subscribe(); </script>
