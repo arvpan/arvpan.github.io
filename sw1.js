@@ -1,6 +1,7 @@
 var CACHE_NAME ;
 var swversion = '2.0.0';
 var clientApi = "https://sw.pushengage.com/p/v1";
+var payload_notifs=[]; 
 
 function get_browser() {
     var ua = navigator.userAgent,
