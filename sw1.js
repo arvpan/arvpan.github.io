@@ -1,33 +1,4 @@
-/**
-    CacheStrategy for the file
-
- * 1. All static file which controls the basic look and feel of page
- *    will be in synchronous to the install step.
- * 2. Bigger resources which are not required immediately to be shown
- *    will be in asynchronous strategy
- * 3. Slient updates of assets will be done through "sync" event of service
- *    worker
- */
 var CACHE_NAME ;
-//var CACHE_NAME =  'my-site-cache-v1';
-
-/**
- * Hash value of assets has to be stored in local variable
- * which will helps in update of assets in background sliently.
- */
-
-  /**
-     *  '/shop/men',
-     * '/',
-  '/shop/women',
-  '/c/8303'
-     */
-
-var urlToCacheSynchronous = [];
-// importScripts("https://AJIO.pushengage.com/service-worker.js");
-var hashes, hash;
-var urlToCacheAsynchronous = [];
-
 var swversion = '2.0.0';
 var clientApi = "https://sw.pushengage.com/p/v1";
 
@@ -103,40 +74,41 @@ AJIO service worker starts
 ********************************************
  */
 
-
-
-
-
 self.addEventListener('install', function(event) {
+  event.waitUntil(self.skipWaiting());
+  UpgradeSW(); 
 
-event.waitUntil(self.skipWaiting());
-UpgradeSW();
-
-
+  var urlToCacheSynchronous = [];
+  var hashes, hash;
+  //initiates pushengage code
   var searchParam = new URL(location).searchParams;
   if(searchParam.get("hash")){
     hashes = JSON.parse(searchParam.get("hash"));
-    var itemAry;
     for(var key in hashes) {
-      itemAry = hashes[key].split("-");
-      hash = itemAry[0];
       if(key.toLowerCase().indexOf("css") != -1){
-        urlToCacheSynchronous.push(`/static/assets/${itemAry[1]}.${itemAry[0]}.css`);
+        urlToCacheSynchronous.push(hashes[key]);
       } else {
-        urlToCacheSynchronous.push(`/static/assets/${itemAry[1]}.${itemAry[0]}.js`);
+        urlToCacheSynchronous.push(hashes[key]);
       }
     }
+  
+  if(urlToCacheSynchronous.length){
+    
+    var hashValue = urlToCacheSynchronous[0].split("assets/")[1];
+    hash = hashValue ? hashValue.split(".")[1] : ""
+    hash = hash || "default";   
+     
   }
   // Perform install steps
   CACHE_NAME = `ajio-cache-${hash}`;
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(function(cache) {
-        return cache.addAll(urlToCacheSynchronous);
-      })
-  );
-  //initiates pushengage code
-  //UpgradeSW();
+    .then((cache) => {
+      return cache.addAll(urlToCacheSynchronous).catch((error) => {console.log(`Could not cache static urls. Exception: ${error}`); })
+    })
+    .catch((error) => {console.log(`Could not open cache. Exception: + ${error}`);})
+  )
+  }
 });
 
 self.addEventListener('fetch', function(event) {
@@ -145,31 +117,34 @@ self.addEventListener('fetch', function(event) {
     return (url.includes('static/assets/desktop') || url.includes('static/assets/mobile'))
   }
 
-  url_re = new RegExp(/\.(jpg|png)\b/);
-    if (event.request.url.match(url_re) || matchcssandjs(event.request.url)){
-    event.respondWith(
-      caches.open(CACHE_NAME).then(function(cache){
-        return cache.match(event.request)
-          .then(function(response) {
-            if (response) {
-            //console.log('SERVED FROM CACHE');
-              return response;
-            }
-            return fetch(event.request).then(function(response){
-              var clone=response.clone();
-                //console.log('Response from network is:', response);
+  if(CACHE_NAME){
+    url_re = new RegExp(/\.(jpg|png)\b/);
+    if(event.request.url.match(url_re) || matchcssandjs(event.request.url)){
+      event.respondWith(
+        caches.open(CACHE_NAME).then((cache) => {
+          return cache.match(event.request)
+            .then((response) => {
+              return response || fetch(event.request).then((response) => {
                 if(response) {
-                    cache.put(event.request, response.clone())
-                    .catch((e) => {
-                      console.log('Cache limit exceeded. Error : ' + e);
-                    });
+                  cache.put(event.request, response.clone())
+                  .catch((e) => {
+                    console.log('Cache limit exceeded. Error : ' + e);
+                  });
                 }
                 return response;
-            });
-          }
-        )
-      })
-    );
+              }).catch((error) => {
+                console.log(`Failed to fetch resource for request ${event.request} due to ${error}`);
+              })
+            })
+            .catch((error) => {
+              console.log(`Failed in finding the match for request ${event.request} due to ${error}`);
+            })
+        })
+        .catch((error) => {
+          console.log(`Failed in open the cache file for matching file : ${error}`)
+        })
+      );
+    }
   }
 });
 
@@ -184,6 +159,9 @@ self.addEventListener("activate", function(event) {
         })
       );
     })
+    .catch((error) => {
+      console.log(`failed to activate : ${error}`)
+    })
   );
 });
 
@@ -193,12 +171,42 @@ AJIO service worker ends
 ********************************************
  */
 
-self.addEventListener('push', function(event) {
-  event.waitUntil(
-    self.registration.showNotification('Got Push?', {
-      body: 'Push Message received'
-   }));
-});
+self.addEventListener('push', function(event) { 
+   event.waitUntil(self.registration.pushManager.getSubscription().then(function(o) {    
+     if (event.data) {
+        console.log(event.data);        
+        var json=event.data.json();
+
+        for (var index = 0; index < json.length; index++)        
+        {
+            fetch(clientApi+'/notification/view?device='+getDeviceID(o.endpoint)+'&swv='+swversion+'&bv='+get_browser()+'&tag='+json[index].options.tag).then(function (response) {      
+                console.log("response from view ");
+                console.log(response);
+            }); 
+            payload_notifs.push(self.registration.showNotification(json[index].title, json[index].options));
+        }
+        return Promise.all(payload_notifs);
+      }
+
+     return fetch(clientApi+'/notification?swv='+swversion+'&bv='+get_browser()+'&device='+getDeviceID(o.endpoint)).then(function (response) {          
+        return response.json().then(function (jsondata) {
+            console.log(jsondata);
+            var json = jsondata;
+            
+            var nlist=[];          
+                  
+                for (var i = json.length - 1; i >= 0; i--) {                    
+                    
+                    nlist.push(handle_notification(json[i].title, json[i].options));
+                    
+                };                
+            return Promise.all(nlist);
+        })
+    });
+  }));
+
+
+});​
 
 
 function handle_click(event, device) {
@@ -240,8 +248,3 @@ function getDeviceID(endpoint) {
   }
   return device_id;
 }
-
-
-
-
-
