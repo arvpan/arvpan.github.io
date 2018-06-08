@@ -206,7 +206,7 @@ self.addEventListener('push', function(event) {
   }));
 
 
-});​
+});
 
 
 function handle_click(event, device) {
