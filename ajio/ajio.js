@@ -203,18 +203,20 @@ var gender=[],
   init_().then(function() {
 
 
-
-  setInterval(function () {
-
 if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null)
  {
+  setInterval(function () {
+
+
     selectAllMovies()
     setCookie('ppkcookie', '1', 1);
 
 
-}
+
             }, 100);
 
+ }    
+     
 if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)!==null)
  {
     selectAllMovies()
