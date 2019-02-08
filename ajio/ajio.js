@@ -573,13 +573,13 @@ for (itk=0;itk<Math.min(40,tura.length);itk++) {
 
    });
 
-       $('#color').click(function(){
+       $('#colors').click(function(){
 
 
 
 
            color = [];
-           $('#color :checkbox:checked').each(function (i) {
+           $('#colors :checkbox:checked').each(function (i) {
 
                 color.push(product.filterColors.match( $(this).val()));
 
