@@ -202,7 +202,7 @@ var gender=[],
 
   init_().then(function() {
 
-
+selectAllMovies();
 
   setInterval(function () {
 
