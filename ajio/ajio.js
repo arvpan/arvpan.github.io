@@ -213,7 +213,7 @@ if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null)
 
 
 
-            }, 100);
+            }, 500);
 
  }    
      
