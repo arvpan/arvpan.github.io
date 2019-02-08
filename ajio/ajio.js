@@ -215,7 +215,13 @@ if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null)
 }
             }, 100);
 
+if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)!==null)
+ {
+    selectAllMovies()
+    
 
+
+}
 
 
 
