@@ -171,6 +171,8 @@ tara=results.length;
 for (itk=0;itk<40;itk++) {
     $('.ReactVirtualized__Grid__innerScrollContainer').json2html(results[itk], transform);
     taku=itk;
+    setCookie('ppkcookie', '1', 1);
+
 }
 
 
@@ -211,7 +213,7 @@ var gender=[],
 if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null)
  {
     selectAllMovies()
-    setCookie('ppkcookie', '1', 1);
+
 
 
 }
