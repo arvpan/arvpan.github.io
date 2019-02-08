@@ -171,7 +171,7 @@ tara=results.length;
 for (itk=0;itk<40;itk++) {
     $('.ReactVirtualized__Grid__innerScrollContainer').json2html(results[itk], transform);
     taku=itk;
-    setCookie('ppkcookie', '1', 1);
+
 
 }
 
@@ -204,22 +204,36 @@ var gender=[],
     compositeCategory=null;
  $(function() {
 
+
+
   init_().then(function() {
 
 
 
-  setInterval(function () {
 
-if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null)
+
+// if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null && checkForExistingData_())
+//  {
+//   setInterval(function () {
+
+setTimeout( function() {
+
+if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null )
  {
-    selectAllMovies()
 
-
-
+ selectAllMovies()
 }
-            }, 100);
+     }  , 1000 );
 
 
+    // selectAllMovies()
+
+
+
+
+//             }, 100);
+//
+// }
 
 if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)!==null)
 {
