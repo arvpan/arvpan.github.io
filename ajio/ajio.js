@@ -119,6 +119,8 @@ window.transform={"<>":"div","class":"item rilrtl-products-list__item item ","st
           return product.createRow(obj);
         });
         return db.insert().into(product).values(rows).exec();
+
+
       }
     }.bind(this);
 
@@ -203,30 +205,27 @@ var gender=[],
   init_().then(function() {
 
 
-if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null)
- {
+
   setInterval(function () {
 
-
+if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null)
+ {
     selectAllMovies()
     setCookie('ppkcookie', '1', 1);
 
 
+}
+            }, 100);
 
-            }, 1000);
 
- }    
-     
+
 if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)!==null)
- {
-    selectAllMovies()
-    
+{
+     selectAllMovies()
+
 
 
 }
-
-
-
 
 
      var product = db.getSchema().table('product');
