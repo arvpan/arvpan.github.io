@@ -216,18 +216,33 @@ var gender=[],
 //  {
 //   setInterval(function () {
 
-setTimeout( function() {
+// setTimeout( function() {
+
+// if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null )
+//  {
+
+//  selectAllMovies();
+//  setCookie('ppkcookie',1,1);
+    
+// }
+//      }  , 1000 );
+
+
+ setTimeout( function() {
 
 if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null )
  {
 
+setTimeout( function() {
  selectAllMovies();
- setCookie('ppkcookie',1,1);
-    
-}
-     }  , 1000 );
+ 
+}  , 500 );
 
+ }
+setCookie('ppkcookie',1,1)
 
+     }  , 500 );     
+      
     // selectAllMovies()
 
 
