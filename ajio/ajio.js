@@ -221,7 +221,9 @@ setTimeout( function() {
 if (document.cookie.match(/^(.*;)?\s*ppkcookie\s*=\s*[^;]+(.*)?$/)===null )
  {
 
- selectAllMovies()
+ selectAllMovies();
+ setCookie('ppkcookie',1,1);
+    
 }
      }  , 1000 );
 
