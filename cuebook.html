@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    
+    <title>CueBook</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+   
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+		<link href="css/css.css" rel="stylesheet"> 
+		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	    <!-- ==============================================
+	    Hero
+	    =============================================== -->
+        <section class="hero">
+         <div class="container">
+          <div class="row">	
+		  
+		   <div class="col-lg-6 offset-lg-3">
+			
+			<div class="cardbox shadow-lg bg-white">
+			 
+			 <div class="cardbox-heading">
+			  <!-- START dropdown-->
+			  <div class="dropdown float-right">
+			   <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
+				<em class="fa fa-ellipsis-h"></em>
+			   </button>
+			   <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+				<a class="dropdown-item" href="#">Hide post</a>
+				<a class="dropdown-item" href="#">Stop following</a>
+				<a class="dropdown-item" href="#">Report</a>
+			   </div>
+			  </div><!--/ dropdown -->
+			  <div class="media m-0">
+			   <div class="d-flex mr-3">
+				<a href=""><img class="img-fluid rounded-circle" src="image1.jpg" alt="User"></a>
+			   </div>
+			   <div class="media-body">
+			    <p class="m-0">Robot Panda</p>
+				<small><span><i class="icon ion-md-pin"></i> Bangalore, India</span></small>
+				<small><span><i class="icon ion-md-time"></i> 10 hours ago</span></small>
+			   </div>
+			  </div><!--/ media -->
+			 </div><!--/ cardbox-heading -->
+			  
+			 <div class="cardbox-item" id="graph3">
+			  <!-- <img class="img-fluid" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/1.jpg" alt="Image"> -->
+         <!-- <div class="col-md-3" id="graph3" style="height:400px"> -->
+			 </div><!--/ cardbox-item -->
+			 <div class="cardbox-base">
+			  <ul class="float-right">
+			   <li><a><i class="fa fa-comments"></i></a></li>
+			   <li><a><em class="mr-5">12</em></a></li>
+			   <li><a><i class="fa fa-share-alt"></i></a></li>
+			   <li><a><em class="mr-3">03</em></a></li>
+			  </ul>
+			  <ul>
+			   <li><a><i class="fa fa-thumbs-up"></i></a></li>
+			   <li><a href="#"><img src="image2.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
+			   <li><a href="#"><img src="image3.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
+			   <li><a href="#"><img src="image4.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
+			   <li><a href="#"><img src="image5.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
+			   <li><a><span>242 Likes</span></a></li>
+			  </ul>			   
+			 </div><!--/ cardbox-base -->
+			 <div class="cardbox-comments">
+			  <span class="comment-avatar float-left">
+			   <a href=""><img class="rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/6.jpg" alt="..."></a>                            
+			  </span>
+			  <div class="search">
+			   <input placeholder="Write a comment" type="text">
+			   <button><i class="fa fa-camera"></i></button>
+			  </div><!--/. Search -->
+			 </div><!--/ cardbox-like -->			  
+					
+			</div><!--/ cardbox -->
+
+           </div><!--/ col-lg-6 -->	
+		
+			
+          </div><!--/ row -->
+         </div><!--/ container -->
+        </section>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+<script type="text/javascript">
+  
+
+
+var startTime = Date.now();
+
+var data = [{
+  x: [ new Date().getTime() / 1000 ],
+  y: [0]
+}];
+
+
+
+// Plotly.plot("graph1", data, { title: 'Random Over Time'});
+// Plotly.plot("graph2", data, { title: 'Random Over Time (clone)'});
+Plotly.plot("graph3", data, { title: 'Random Over Time (clone 2)'},{responsive: true});
+
+// Update graphs
+// setInterval(function(){
+//   var update = {
+//     x: [[ new Date().getTime() / 1000 ]],
+//     y: [[ Math.random() ]]
+//   };
+  
+//   Plotly.extendTraces("graph1", update, [0], 10);
+
+// }, 1000);
+
+// setTimeout(function() {
+// setInterval(function(){
+//   var update = {
+//     x: [[ new Date().getTime() / 1000 ]],
+//     y: [[ Math.random() ]]
+//   };
+//   Plotly.extendTraces("graph2", update, [0], 10);
+// }, 1000);  
+// }, 100);
+
+setTimeout(function() {
+setInterval(function(){
+  var update = {
+    x: [[ new Date().getTime() / 1000 ]],
+    y: [[ Math.random() ]]
+  };
+  Plotly.extendTraces("graph3", update, [0], 10);
+}, 1000);
+}, 200);
+
+// Update timer
+// setInterval(function(){
+//     var elapsedTime = (Date.now() - startTime) / 1000;
+//     $("#timer").text(elapsedTime.toFixed(3));
+// }, 100);
+
+  
+</script>
+</body>
+</html>
